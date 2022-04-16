@@ -1,0 +1,7 @@
+PLAY BY/CAN PLAY, 0N MOVIE, 1N ACTOR
+MOVIE: name, director, release date, duration, synopsis, rate, photo
+:
+
+ACTOR: CodeActor, lastname, firstname, age, nationality, photo, biography
+BELONGS TO, 0N CATEGORY, 1N MOVIE
+CATEGORY: name

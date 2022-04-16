@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  #mld .relation { font-variant: small-caps; font-weight: bold }
+  #mld .primary { text-decoration: underline }
+  #mld .foreign { font-style: oblique }
+  #mld .normal { }
+</style>
+</head>
+<body>
+<div id='mld'>
+<div>
+  <span class='relation'>PLAY BY/CAN PLAY</span> (
+    <span class='foreign primary'>name</span>,
+    <span class='foreign primary'>CodeActor</span>
+  )
+</div>
+<div>
+  <span class='relation'>MOVIE</span> (
+    <span class='primary'>name</span>,
+    <span class='normal'>director</span>,
+    <span class='normal'>release date</span>,
+    <span class='normal'>duration</span>,
+    <span class='normal'>synopsis</span>,
+    <span class='normal'>rate</span>,
+    <span class='normal'>photo</span>
+  )
+</div>
+<div>
+  <span class='relation'>ACTOR</span> (
+    <span class='primary'>CodeActor</span>,
+    <span class='normal'>lastname</span>,
+    <span class='normal'>firstname</span>,
+    <span class='normal'>age</span>,
+    <span class='normal'>nationality</span>,
+    <span class='normal'>photo</span>,
+    <span class='normal'>biography</span>
+  )
+</div>
+<div>
+  <span class='relation'>BELONGS TO</span> (
+    <span class='foreign primary'>name</span>,
+    <span class='foreign primary'>name.1</span>
+  )
+</div>
+<!--
+<div>
+  <span class='relation'>CATEGORY</span> (
+    <span class='primary'>name</span>
+  )
+</div>
+-->
+</div>
+</body>
+</html>
