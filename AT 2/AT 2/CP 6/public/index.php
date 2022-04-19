@@ -1,51 +1,53 @@
 <?php
-// Nos pages sont maintenant gérées par un controller. On a donc besoin d'inclure son fichier dans notre point d'entrée
-require_once __DIR__. '/../app/controllers/MainController.php';
-require_once __DIR__. '/../app/controllers/CategoryController.php';
-require_once __DIR__. '/../app/models/Category.php';
+
+// Inclusion des classes dont dépend notre code
+require_once __DIR__.'/../vendor/autoload.php';
+
+// On récupère le paramètre GET _url contenant le nom de la page à afficher. S'il n'existe pas, on est donc sur la homepage, qu'on matérialise par /
+$pageToDisplay = $_GET['_url'] ?? '/';
 
 
-// Pour charger nos pages, on a besoin de récupérer le paramètre "page" dans l'url
+// On utilise maintenant AltoRouter pour gérer nos routes, donc commence par l'instancier
 
-// Version longue
-// if(isset($_GET['page']) && !empty($_GET['page'])){
-//     $pageToDisplay = $_GET['page'];
-// } else {
-//     $pageToDisplay = 'home';
-// }
+$router = new AltoRouter();
 
-// Version avec ternaire
-// $pageToDisplay = (isset($_GET['page']) && !empty($_GET['page'])) ? $_GET['page'] : 'home';
+// On donne à AltoRouter la partie de l'URL qui sera commune à toutes nos pages pour qu'il ne la prenne pas en compte.
+// $_SERVER['BASE_URI'] contient cette valeur et est définie par le .htaccess
+//$router->setBasePath($_SERVER['BASE_URI']);
 
-// Version encore plus courte avec l'opérateur de coalescence nulle
-// https://www.php.net/manual/fr/migration70.new-features.php
-$pageToDisplay = $_GET['_url'] ?? 'home';
+// On déclare nos routes avec AltoRouter. Celui-ci nous fournit une méthode dédiée à cette création de routes.
 
-// Pour bien gérer l'affichage de nos pages et éviter que l'utilisateur ne tombe sur une erreur, on va se faire un répertoire des pages existantes. On appelle ça les routes.
-$routes = [
-    // On stocke en clé le nom de la page
+$router->map(
+    'GET', // On indique la méthode HTTP de la route (pour une page visitée naturellement ce sera GET)
+    '/', // Url de la route
+    // Le 3ème argument désigne la "cible" de la route, c'est à dire le code à exécuter quand on arrive sur cette route
+    [
+        'controller' => 'MainController',
+        'method' => 'home'
+    ],
+    'home'// Nom de la route (une sorte d'étiquette pour l'identifier facilement)
+);
 
-    '/categories' => [
+$router->map(
+    'GET',
+    '/categories',
+    [
         'controller' => 'CategoryController',
-        'method' => 'categoryList',
+        'method' => 'categoryList'
     ],
+    'categoryList'
+);
 
-    'home' => [
-        'controller' => 'MainController',
-        'method' => 'home',
-    ],
 
-    'home' => [
-        'controller' => 'MainController',
-        'method' => 'homepage',
-    ],
-];
+// On demande à AltoRouter de vérifier si l'url demandée fait partie des routes existantes (déclarées avec map())
+// $match va contenir des infos sur la route, si elle existe. Dans le cas contraire, elle contiendra false
+$match = $router->match();
 
-// Quand l'utilisateur demande une page, on va d'abord vérifier que cette page existe dans notre routeur. On vérifie donc qu'il ya une entrée du tableau $routes qui correspond à notre paramètre GET
-if(isset($routes[$pageToDisplay])){
+// Quand l'utilisateur demande une page, on va d'abord vérifier que cette page existe dans notre routeur grace à la méthode match(). 
+if ($match != false) {
 
     // On récupère les infos liées à la route courante
-    $currentRoute = $routes[$pageToDisplay];
+    $currentRoute = $match['target'];
     
     // On récupère le controller à utiliser
     $controllerToUse = $currentRoute['controller'];
@@ -55,10 +57,11 @@ if(isset($routes[$pageToDisplay])){
 
 
     // Comme le controller gère l'affichage des pages, on a besoin de l'instancier pour pouvoir utiliser ses méthodes.
+    // Comme tous nos controllers utilisent le meme namespace, on recrée le FQCN (Fully Qualifed ClassName) de la classe à charger.
+    $controllerToUse = "CP6\Controllers\\" . $controllerToUse;
+    
     $controller = new $controllerToUse;
 
     // On va exécuter la méthode liée à la page. Le nom de cette méthode est stocké dans la variable $methodToUse. On peut donc l'utiliser pour écrire dynamiquement la méthode à exécuter.
-    $controller->$methodToUse();
-
-
+    $controller->$methodToUse($match['params']);
 }

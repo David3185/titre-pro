@@ -1,6 +1,10 @@
 <?php
 
-class Category
+namespace CP6\Controllers;
+
+use CP6\Models\Category;
+
+class CategoryController
 {
 
     public function categoryList()

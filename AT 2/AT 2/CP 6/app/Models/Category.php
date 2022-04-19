@@ -1,6 +1,11 @@
 <?php
 
-class Category
+namespace CP6\Models;
+
+use CP6\Utils\Database;
+use PDO;
+
+class Category extends CoreModel
 {
 
     private $name;
@@ -24,7 +29,7 @@ class Category
         $pdoStatement =  $pdo->query($sql);
 
         // On traduit le résultat sous la forme d'un tableau grace à fetchAll. Et on indique que chaque entrée du tableau doit etre instanciée depuis une classe avec PDO::FETCH_CLASS. On précise le nom de la classe en 2ème argument : Category
-        $categories = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'Category');
+        $categories = $pdoStatement->fetchAll(PDO::FETCH_CLASS, 'CP6\Models\Category');
 
         return $categories;
     }
