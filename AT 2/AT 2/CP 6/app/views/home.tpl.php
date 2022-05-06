@@ -6,7 +6,7 @@
     <?php $categoriesList = $viewData['categoriesList'];
     foreach($categoriesList as $currentProduct) {
         echo '<li>' .$currentProduct->getName() . '<br>'; 
-    }
-    ?></ul>
-</section>
+    }?>
+</ul>
 
+</section>

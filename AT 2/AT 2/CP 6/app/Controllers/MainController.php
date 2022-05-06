@@ -4,7 +4,7 @@ namespace CP6\Controllers;
 
 use CP6\Models\Category;
 
-class MainController
+class MainController extends CoreController
 {
 
     public function home()
@@ -12,9 +12,9 @@ class MainController
         $categoryModel = new Category;
         $categoriesList = $categoryModel->findAll();
 
-
         $this->show('home', ['categoriesList' => $categoriesList]);
     }
+
 
     public function show($viewName, $viewData = [])
     {
@@ -24,16 +24,4 @@ class MainController
 
     }
 
-        /**
-     * Méthode permettant de gérer une page pour nos tests
-     *
-     * @return void
-     */
-    public function test()
-    {
-        echo "Ceci est une page de test";
-
-        $typeModel = new Category;
-        var_dump($typeModel->findAll());
-    }
 }

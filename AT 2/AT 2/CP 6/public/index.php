@@ -29,6 +29,17 @@ $router->map(
 );
 
 $router->map(
+    'POST', // On indique la méthode HTTP de la route (pour une page visitée naturellement ce sera GET)
+    '/categories', // Url de la route
+    // Le 3ème argument désigne la "cible" de la route, c'est à dire le code à exécuter quand on arrive sur cette route
+    [
+        'controller' => 'CategoryController',
+        'method' => 'createCategory'
+    ],
+    'home-add-category'// Nom de la route (une sorte d'étiquette pour l'identifier facilement)
+);
+
+$router->map(
     'GET',
     '/categories',
     [
@@ -36,6 +47,46 @@ $router->map(
         'method' => 'categoryList'
     ],
     'categoryList'
+);
+
+$router->map(
+    'GET',
+    '/category/[i:id]',
+    [
+        'controller' => 'CategoryController',
+        'method' => 'categoryShow'
+    ],
+    'category-page'
+);
+
+$router->map(
+    'GET',
+    '/category/delete/[i:id]',
+    [
+        'method' => 'delete',
+        'controller' => 'CategoryController'
+    ],
+    'category-delete'
+);
+
+$router->map(
+    'GET',
+    '/category/update/[i:id]',
+    [
+        'controller' => 'CategoryController',
+        'method' => 'updateForm'
+    ],
+    'category-updateForm'
+);
+
+$router->map(
+    'POST',
+    '/category/update/[i:id]',
+    [
+        'controller' => 'CategoryController',
+        'method' => 'updateCategory'
+    ],
+    'category-update'
 );
 
 
