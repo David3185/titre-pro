@@ -1,7 +1,8 @@
-<h1>Page d'accueil</h1>
+<h1>Welcome</h1>
 
 <section>
-<h2>Liste des catégories : </h2>
+<h2>Liste des catégories : <a href="/categories">Ici</a></h2>
+
 <ul>
     <?php $categoriesList = $viewData['categoriesList'];
     foreach($categoriesList as $currentProduct) {

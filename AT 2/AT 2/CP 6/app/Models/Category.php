@@ -23,7 +23,7 @@ class Category extends CoreModel
         $pdo = Database::getPDO();
 
         // Ecrire une requete SQL pour récupérer toutes les catégories
-        $sql = "SELECT * FROM `Category`";
+        $sql = "SELECT * FROM `Category` ORDER BY `name`";
         
         // On exécute la requete et on récupère le résultat
         $pdoStatement =  $pdo->query($sql);

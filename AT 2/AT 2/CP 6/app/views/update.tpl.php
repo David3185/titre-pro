@@ -8,3 +8,5 @@
                 <input value="<?= $category->getName() ?>" type="text"  name="name" class="form-control" id="name" placeholder="Nom de la catégorie">
             </div>
         </form>
+<button type="submit">Valider</button>
+        <a href="/">Accueil</a>

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../public/style.css">
+
 <?php
 
 // Inclusion des classes dont dépend notre code
