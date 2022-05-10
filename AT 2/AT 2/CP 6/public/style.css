@@ -1,3 +1,15 @@
 h1 {
-    color: brown;
+    font-size: 400%;
+    color: whitesmoke;
+}
+
+section {
+    font-size: 250%;
+}
+
+body {
+background-image: url(https://images.pexels.com/photos/33129/popcorn-movie-party-entertainment.jpg?cs=srgb&dl=pexels-pixabay-33129.jpg&fm=jpg);
+background-size: cover;
+background-repeat: no-repeat;
+text-align: center;
 }
